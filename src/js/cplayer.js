@@ -1,14 +1,14 @@
 /*!
  cPlayer REWRITE - 2.0
 
- Author && user(:cry:)	Corps
+ Author && user(:cry:)  Corps
  天若有情天亦老,我为长者续一秒~
  */
 "use strict";
 class cPlayer {
     constructor(options) {
         /*
-         *	參數处理,合并默认参数与定义參數
+         *  參數处理,合并默认参数与定义參數
          */
         const DEFAULTS = {
             "element": document.getElementById("cplayer"),
@@ -422,7 +422,9 @@ class cPlayer {
                 }
             }
 
-            lrcs.push(onelrc);
+            if (Object.prototype.toString.call(onelrc[0]) === '[object Number]') {
+                lrcs.push(onelrc);
+            }
         }
         //LRC BASED
         let lyric = [];
