@@ -1,8 +1,8 @@
 /*!
  cPlayer REWRITE - 2.0
 
-     Author && user(:cry:)	Corps
-     天若有情天亦老,我为长者续一秒~
+ Author && user(:cry:)	Corps
+ 天若有情天亦老,我为长者续一秒~
  */
 "use strict";
 class cPlayer {
@@ -12,30 +12,31 @@ class cPlayer {
          */
         const DEFAULTS = {
             "element": document.getElementById("cplayer"),
-            "list"   : [],
-            "mdicon" : true
+            "list": [],
+            "mdicon": true
         };
         /*
-        if(!Object.assign) {
-            console.log("BAD BROWSER,CPLAYER CAN'T BE USED.");
-            alert("Please UPDATE YOUR BROWSER!!!");
-        };
-        */
+         if(!Object.assign) {
+         console.log("BAD BROWSER,CPLAYER CAN'T BE USED.");
+         alert("Please UPDATE YOUR BROWSER!!!");
+         };
+         */
         //let __SELF__ = this;
-        if(Object.assign !== undefined){
+        if (Object.assign !== undefined) {
             this.options = Object.assign({}, DEFAULTS, options);
         }
-        if(this.options.mdicon !== false){
+        if (this.options.mdicon !== false) {
             let link = document.createElement("link");
             link.rel = "stylesheet";
-            if(typeof this.options.mdicon === "string"){
+            if (typeof this.options.mdicon === "string") {
                 link.href = this.options.mdicon;
-            }else{
+            } else {
                 link.href = "https://cdn.bootcss.com/material-design-icons/2.2.3/iconfont/material-icons.css";
             }
             document.head.appendChild(link);
-        };
-        var list, gbc = (args,ald)=>ald!==undefined?ald.getElementsByClassName(args)[0]:this.options.element.getElementsByClassName(args)[0], gbn = (args)=>this.options.element.getElementsByTagName(args)[0];
+        }
+        ;
+        var list, gbc = (args, ald)=>ald !== undefined ? ald.getElementsByClassName(args)[0] : this.options.element.getElementsByClassName(args)[0], gbn = (args)=>this.options.element.getElementsByTagName(args)[0];
         this.now = 0;
         this.dragging = {contain: false, target: undefined};
         //现在开始填DOM
@@ -98,25 +99,25 @@ class cPlayer {
     </c-player>`;
         //然后为DOMList填充一下吧
         this.__LIST__ = {
-            "lyric"      : gbc("lyric"),
-            "lyricBody"  : gbn("lyric-body"),
-            "toggle"     : gbc("play-icon"),
-            "img"        : gbc("meta-bak"),
-            "name"       : gbc("music-name"),
-            "artist"     : gbc("music-artist"),
-            "time"       : gbc("time"),
-            "timeLine"   : gbc("time-line"),
-            "timePoint"  : gbc("time-point"),
-            "lyricPower" : gbc("lyric-power"),
+            "lyric": gbc("lyric"),
+            "lyricBody": gbn("lyric-body"),
+            "toggle": gbc("play-icon"),
+            "img": gbc("meta-bak"),
+            "name": gbc("music-name"),
+            "artist": gbc("music-artist"),
+            "time": gbc("time"),
+            "timeLine": gbc("time-line"),
+            "timePoint": gbc("time-point"),
+            "lyricPower": gbc("lyric-power"),
             "volumePower": gbc("volume-power"),
-            "volumeLine" : gbc("volume-line"),
+            "volumeLine": gbc("volume-line"),
             "volumePoint": gbc("volume-point"),
-            "listPower"  : gbc("list-power"),
-            "list"       : gbc("list"),
-            "listBody"   : gbn("list-body")
+            "listPower": gbc("list-power"),
+            "list": gbc("list"),
+            "listBody": gbn("list-body")
         };
-        this.__LIST__.toggleIcon = gbc("material-icons",this.__LIST__.toggle);
-        this.__LIST__.volumeIcon = gbc("material-icons",this.__LIST__.volumePower);
+        this.__LIST__.toggleIcon = gbc("material-icons", this.__LIST__.toggle);
+        this.__LIST__.volumeIcon = gbc("material-icons", this.__LIST__.volumePower);
 
         this.music = new Audio;
         this.toggle();
@@ -170,9 +171,9 @@ class cPlayer {
             this.__LIST__.lyricBody.style.transform = "";
             this.__LIST__.toggleIcon.innerHTML = "play_arrow";
             if (this.options.list[this.now].loop === true) {
-                    this.updateTime(0);
-                    this.play();
-            }else if (this.hasList()&&this.now !== this.options.list.length-1) {
+                this.updateTime(0);
+                this.play();
+            } else if (this.hasList() && this.now !== this.options.list.length - 1) {
                 this.next();
             }
         });
@@ -228,7 +229,7 @@ class cPlayer {
     volume(vl = undefined) {
         if (vl === undefined) {
             this.__LIST__.volumeLine.style.width = (this.music.volume * 100) + "%";
-            if(!this.isMuted()){
+            if (!this.isMuted()) {
                 this.__LIST__.volumeIcon.innerHTML = "volume_up";
             }
             return this.isMuted() ? 0 : this.music.volume;
@@ -248,27 +249,27 @@ class cPlayer {
     }
 
     play() {
-        if(this.music.seeking === true) return;
+        if (this.music.seeking === true) return;
         /*
-        this.music.play().then(()=>{
-            console.log("It starts playing......")
-        }).catch((e)=>{
-            console.warn(e);
-            console.log("Maybe The problem is that the music hasn't been loaded,you can send a Loading Request again by using `sth.load()` there.")
-        });
-        */
+         this.music.play().then(()=>{
+         console.log("It starts playing......")
+         }).catch((e)=>{
+         console.warn(e);
+         console.log("Maybe The problem is that the music hasn't been loaded,you can send a Loading Request again by using `sth.load()` there.")
+         });
+         */
         this.music.play();
         return this;
     }
 
     pause() {
-        if(this.music.seeking === true) return;
+        if (this.music.seeking === true) return;
         this.music.pause();
         return this;
     }
 
     last() {
-        if(this.now === 0) return;
+        if (this.now === 0) return;
         this.now--;
         this.toggle();
         this.play();
@@ -276,7 +277,7 @@ class cPlayer {
     }
 
     next() {
-        if(this.now === this.options.list.length-1) return;
+        if (this.now === this.options.list.length - 1) return;
         this.now++;
         this.toggle();
         this.play();
@@ -291,8 +292,19 @@ class cPlayer {
     }
 
     toggle(now = this.now) {
-        if(this.options.onChange !== undefined) this.options.onChange(this.now);
+        if (this.options.onChange !== undefined) this.options.onChange(this.now);
         let list = this.options.list[now], dom = this.__LIST__;
+
+        for (var index = 0; index < dom.listBody.children.length; index++) {
+            let classList = this.__LIST__.listBody.children[index].classList;
+            if (index == now) {
+                !classList.contains('selected') && classList.add('selected');
+            } else {
+                classList.contains('selected') && classList.remove('selected');
+            }
+            dom.listBody.children[index].classList = classList;
+        }
+
         [dom.img.src, dom.name.innerHTML, dom.artist.innerHTML, this.music.src] = [list.image, list.name, list.artist, list.url];
         this.refreshLyric();
         if (!this.hasLyric(this.now))this.hideLyric();
@@ -302,12 +314,12 @@ class cPlayer {
     }
 
     isPaused(func) {
-        if(func !== undefined) func();
+        if (func !== undefined) func();
         return this.music.paused;
     }
 
-    hasLyric(id = 0,func) {
-        if(func !== undefined) func();
+    hasLyric(id = 0, func) {
+        if (func !== undefined) func();
         return (this.options.list[id].lyric !== undefined);
     }
 
@@ -323,20 +335,20 @@ class cPlayer {
     }
 
     hasList(func) {
-        if(func !== undefined) func();
+        if (func !== undefined) func();
         return (this.options.list.length > 1);
     }
 
     showList(func) {
         this.__LIST__.list.classList.remove("invisible");
         if (!this.__LIST__.lyric.classList.contains("invisible")) this.hideLyric();
-        if(func !== undefined) func();
+        if (func !== undefined) func();
         return this;
     }
 
     hideList(func) {
         this.__LIST__.list.classList.add("invisible");
-        if(func !== undefined) func();
+        if (func !== undefined) func();
         return this;
     }
 
@@ -352,10 +364,10 @@ class cPlayer {
                 this.to(i);
             });
         }
-        if(func !== undefined) func();
+        if (func !== undefined) func();
     }
 
-    add(u,func) {
+    add(u, func) {
         //let __SELF__ = this;
         let ln = this.options.list.push(u);
         let div = document.createElement("div");
@@ -364,7 +376,7 @@ class cPlayer {
         div.addEventListener("click", ()=> {
             this.to(ln - 1);
         });
-        if(func !== undefined) func();
+        if (func !== undefined) func();
     }
 
     lyric(content = undefined) {
@@ -439,11 +451,11 @@ class cPlayer {
 
     }
 
-    updateTime(time = undefined,func) {
+    updateTime(time = undefined, func) {
         if (time !== undefined)this.music.currentTime = parseInt(time);
         if (this.dragging.contain === false) this.__LIST__.timeLine.style.width = (this.music.currentTime / this.music.duration) * 100 + "%";
         //if(this.isPaused()) this.play();
-        if(func !== undefined) func(this.music.currentTime);
+        if (func !== undefined) func(this.music.currentTime);
         return this.music.currentTime;
     }
 
@@ -458,8 +470,8 @@ class cPlayer {
      * 此时应操纵下一个歌词!!!!(重要) *
      */
     slideLyric(time) {
-        if(this.__LIST__.lyric.classList.contains("invisible"))return;
-        let lyricToTop,halfBody,translateY;
+        if (this.__LIST__.lyric.classList.contains("invisible"))return;
+        let lyricToTop, halfBody, translateY;
         for (var i = this.__LYRIC__.length - 1; i >= 0; i--) {
             if (this.__LYRIC__[i + 1] !== undefined && this.__LYRIC__[i].time < time && this.__LYRIC__[i + 1].time > time
                 || this.__LYRIC__[i + 1] === undefined && this.__LYRIC__[i].time < time) {
@@ -479,23 +491,23 @@ class cPlayer {
 
 //Object.assign 解决方案
 if (typeof Object.assign != 'function') {
-  Object.assign = function(target) {
-    'use strict';
-    if (target == null) {
-      throw new TypeError('Cannot convert undefined or null to object');
-    }
-
-    target = Object(target);
-    for (var index = 1; index < arguments.length; index++) {
-      var source = arguments[index];
-      if (source != null) {
-        for (var key in source) {
-          if (Object.prototype.hasOwnProperty.call(source, key)) {
-            target[key] = source[key];
-          }
+    Object.assign = function (target) {
+        'use strict';
+        if (target == null) {
+            throw new TypeError('Cannot convert undefined or null to object');
         }
-      }
-    }
-    return target;
-  };
+
+        target = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+            var source = arguments[index];
+            if (source != null) {
+                for (var key in source) {
+                    if (Object.prototype.hasOwnProperty.call(source, key)) {
+                        target[key] = source[key];
+                    }
+                }
+            }
+        }
+        return target;
+    };
 }
